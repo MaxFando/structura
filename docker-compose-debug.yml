@@ -37,7 +37,7 @@ services:
       - database_data:/var/lib/postgresql/data:delegated
       - ./pg/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/:delegated
     environment:
-      POSTGRES_DB: cart
+      POSTGRES_DB: structura
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:

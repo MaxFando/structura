@@ -4,8 +4,8 @@ LOCAL_BIN := $(shell pwd)/bin
 appName = structura
 compose = docker-compose -f docker-compose-debug.yml -p $(appName)
 
-DB_CART = postgresql://postgres:postgres@localhost:5432/database?sslmode=disable
-DB_CART_MIGRATION_DSN = postgresql://postgres:postgres@localhost:5432/database?search_path=main
+DB_STRUCTURA = postgresql://postgres:postgres@localhost:5432/structura?sslmode=disable
+DB_STRUCTURA_MIGRATION_DSN = postgresql://postgres:postgres@localhost:5432/structura?search_path=main
 
 install-deps:
 	GOBIN=$(LOCAL_BIN) go install github.com/pressly/goose/v3/cmd/goose@v3.21.1
@@ -14,13 +14,13 @@ install-deps:
 db-create-migration:
 	@echo "Enter migration name:"
 	@read name; \
-	GOOSE_DRIVER=postgres GOOSE_DBSTRING=$(DB_CART_MIGRATION_DSN) $(LOCAL_BIN)/goose -dir migrations create $$name sql
+	GOOSE_DRIVER=postgres GOOSE_DBSTRING=$(DB_STRUCTURA_MIGRATION_DSN) $(LOCAL_BIN)/goose -dir migrations create $$name sql
 
 db-migrate:
-	GOOSE_DRIVER=postgres GOOSE_DBSTRING=$(DB_CART_MIGRATION_DSN) $(LOCAL_BIN)/goose -dir migrations up
+	GOOSE_DRIVER=postgres GOOSE_DBSTRING=$(DB_STRUCTURA_MIGRATION_DSN) $(LOCAL_BIN)/goose -dir migrations up
 
 db-rollback:
-	GOOSE_DRIVER=postgres GOOSE_DBSTRING=$(DB_CART_MIGRATION_DSN) $(LOCAL_BIN)/goose -dir migrations down
+	GOOSE_DRIVER=postgres GOOSE_DBSTRING=$(DB_STRUCTURA_MIGRATION_DSN) $(LOCAL_BIN)/goose -dir migrations down
 
 up: down build
 	@echo "Starting app..."
