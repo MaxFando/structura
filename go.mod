@@ -2,8 +2,6 @@ module github.com/MaxFando/structura
 
 go 1.23.0
 
-toolchain go1.24.1
-
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
 	google.golang.org/genproto/googleapis/api v0.0.0-20250414145226-207652e42e2e
