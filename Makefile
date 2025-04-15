@@ -10,7 +10,7 @@ DB_STRUCTURA_MIGRATION_DSN = postgresql://postgres:postgres@localhost:5432/struc
 PHONY: install-lint install-deps db-create-migration db-migrate db-rollback up build down down-v lint lint-fix test generate generate-proto lint-proto lock-proto
 
 install-lint:
-	GOBIN=$(LOCAL_BIN) go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	GOBIN=$(LOCAL_BIN) go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.61.0
 
 install-deps: install-lint
 	GOBIN=$(LOCAL_BIN) go install github.com/pressly/goose/v3/cmd/goose@v3.21.1

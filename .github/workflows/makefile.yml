@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23
+
+      - name: Add bin to PATH
+        run: echo "$(pwd)/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: make install-deps
+
+      - name: Upload bin artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: bin
+          path: bin/
+          retention-days: 7
+
+      - name: Run linter
+        run: make lint
+
+      - name: Run tests
+        run: make test
