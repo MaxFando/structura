@@ -28,3 +28,9 @@ func (s *slogAdapter) Log(level Level, msg string, keyvals ...interface{}) {
 	default:
 	}
 }
+
+func (s *slogAdapter) With(keyvals ...interface{}) adapter {
+	return &slogAdapter{
+		l: s.l.With(keyvals...),
+	}
+}

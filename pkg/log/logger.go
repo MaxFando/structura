@@ -8,6 +8,7 @@ type Logger interface {
 	Debug(ctx context.Context, msg string, keyvals ...interface{})
 	Info(ctx context.Context, msg string, keyvals ...interface{})
 	Error(ctx context.Context, message string, keyvals ...interface{})
+	With(keyvals ...interface{}) Logger
 }
 
 func NewLogger() Logger {
@@ -26,6 +27,7 @@ const (
 
 type adapter interface {
 	Log(level Level, msg string, keyvals ...interface{})
+	With(keyvals ...interface{}) adapter
 }
 
 type logger struct {
@@ -42,4 +44,10 @@ func (l *logger) Info(_ context.Context, msg string, keyvals ...interface{}) {
 
 func (l *logger) Error(_ context.Context, msg string, keyvals ...interface{}) {
 	l.adapter.Log(LevelError, msg, keyvals)
+}
+
+func (l *logger) With(keyvals ...interface{}) Logger {
+	return &logger{
+		adapter: l.adapter.With(keyvals...),
+	}
 }

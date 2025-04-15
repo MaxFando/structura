@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package structura.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "structura/v1";
+
+service StructuraService {
+  // Получение данных по домену
+  rpc GetDomainInfo(GetDomainInfoRequest) returns (GetDomainInfoResponse) {
+    option (google.api.http) = {get: "/api/v1/structura"};
+  }
+  // Получение блоков по конкретной странице
+  rpc GetPageBlocks(GetPageBlocksRequest) returns (GetPageBlocksResponse) {
+    option (google.api.http) = {get: "/api/v1/structura/page/blocks"};
+  }
+}
+
+message GetDomainInfoRequest {
+  string domain = 1;
+}
+
+message GetDomainInfoResponse {
+  int32 pages_count = 1;
+  string domain = 2;
+  repeated Page pages = 3;
+}
+
+message GetPageBlocksRequest {
+  string url = 1;
+}
+
+message GetPageBlocksResponse {
+  repeated Block blocks = 1;
+}
+
+message Block {
+  string id = 1;
+  int32 index = 2;
+  string type = 3;
+}
+
+message Page {
+  string id = 1;
+  string endpoint = 2;
+  repeated Block blocks = 3;
+}
